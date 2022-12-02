@@ -292,8 +292,8 @@ VALUES ('Kyle', 'Harwood', 2022, 3.0)
 # Then query the studets table to get that student by their id
 # Print the new student's id, full name, and gpa to the terminal
 def problem_six(request):
-  student_id = 11
-  new_student = Student.objects.filter(pk = student_id).update(gpa = 3.5)
+  student_id = 14
+  new_student_update = Student.objects.filter(pk = student_id).update(gpa = 3.5)
   student = Student.objects.get(pk = student_id)
   
   
@@ -349,7 +349,7 @@ LIMIT 21
 def problem_seven(request):
 
     # Make sure to set this equal to the primary key of the row you just created!
-    student_id = 11
+    student_id = 14
 
     try:
         student = Student.objects.get(pk=student_id).delete()
@@ -405,16 +405,17 @@ SELECT `school_db_student`.`id`,
 
 # Find all of the instructors that only belong to a single course
 # Print out the instructors full name and number of courses to the console
+
 def bonus_problem(request):
+  instructors = Instructor.objects.annotate(number_of_courses = Count('course')).filter(number_of_courses = 1 )
   
+  for instructor in instructors:
+      print(f"Instructor Name: {instructor.first_name} {instructor.last_name}")
   
-  
-      
-        
   return complete(request)
 
-
-# Supporting Query Method Documentation:
+  
+  # Supporting Query Method Documentation:
 """
 https://docs.djangoproject.com/en/4.0/topics/db/aggregation/
 https://docs.djangoproject.com/en/4.0/ref/models/querysets/#annotate
